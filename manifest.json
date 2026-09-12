@@ -1,0 +1,21 @@
+{
+  "name": "평강공인중개사사무소",
+  "short_name": "평강부동산",
+  "description": "대전 아파트, 분양권, 신혼집 전세, LH 임대 전문 책임중개",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f2f4f6",
+  "theme_color": "#0059b9",
+  "icons": [
+    {
+      "src": "agent.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "agent.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
