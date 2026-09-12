@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+  <title>대전 부동산 포털 - LH, 분양, 원투룸, 안심거래</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    @layer base {
+      html, body { width: 100%; margin: 0; padding: 0; min-height: 100vh; }
+      body { overscroll-behavior-y: none; background-color: #f2f4f6; }
+      .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+      .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#0059b9",
+            "primary-hover": "#2272eb",
+            "primary-fixed": "#d7e2ff",
+            "secondary": "#0056c6",
+            "foreground": "#191f28",
+            "body": "#4e5968",
+            "muted": "#8b95a1",
+            "surface": "#f2f4f6",
+            "surface-alt": "#e8f3ff",
+            "surface-bright": "#f7f9ff",
+            "surface-container": "#e5effc",
+            "surface-container-low": "#edf4ff",
+            "surface-variant": "#d9e3f1",
+            "canvas": "#ffffff",
+            "border": "#e5e8eb",
+            "danger": "#e42939",
+            "error-container": "#ffdad6",
+            "tertiary-fixed": "#ffdbc8",
+            "on-tertiary-fixed": "#311300",
+            "on-primary": "#ffffff",
+            "outline": "#727785"
+          },
+          fontFamily: {
+            sans: ["Plus Jakarta Sans", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-sans text-body flex flex-col min-h-screen">
+  <header class="fixed top-0 w-full z-50 pt-safe bg-canvas/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+    <div class="h-16 px-4 md:px-8 max-w-4xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-bold text-sm">대</span>
+        <span class="text-foreground font-bold text-lg">평강부동산</span>
+      </a>
+      <div class="flex items-center gap-2">
+        <a href="news.html" class="hidden sm:inline-flex px-3 py-1.5 rounded-lg font-semibold text-sm text-body hover:text-foreground transition-colors">부동산 소식</a>
+        <a href="tel:010-2006-2248" aria-label="전화 문의" class="min-w-[44px] min-h-[44px] flex items-center justify-center text-on-surface-variant hover:text-foreground transition-colors">
+          <span class="material-symbols-outlined text-[24px]">call</span>
+        </a>
+        <a href="admin.html" aria-label="관리자 로그인" class="flex items-center justify-center pl-1">
+          <img alt="대표 공인중개사" class="w-8 h-8 rounded-full object-cover border border-border" src="agent.jpg">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 flex flex-col w-full pt-16 pb-28 bg-surface">
+    <div class="flex flex-col w-full max-w-4xl mx-auto">
+      <section class="px-4 md:px-6 pt-5 pb-4 bg-canvas rounded-b-2xl shadow-sm">
+        <div class="flex items-center gap-1.5 mb-1.5">
+          <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-surface-alt text-primary">
+            <span class="material-symbols-outlined text-[14px]">local_fire_department</span>
+          </span>
+          <span class="text-xs text-primary font-bold tracking-tight">실시간 대전 리포트</span>
+        </div>
+        <h1 class="text-2xl md:text-3xl text-foreground font-bold tracking-tight">대전 LH, 다가구, 아파트, 분양</h1>
+        <p class="text-sm text-body mt-1">대전 시세 흐름과 최신 분양, 부동산 세무 꿀팁을 매주 전해드려요.</p>
+
+        <div class="mt-4 relative flex items-center">
+          <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px]">search</span>
+          <input id="newsSearchInput" class="w-full h-11 pl-10 pr-4 bg-surface rounded-xl text-sm text-foreground placeholder:text-muted focus:outline-none focus:bg-canvas focus:ring-1 focus:ring-primary transition-all" placeholder="지역명, 둔산동, 재건축, 세무 검색" type="text" onkeydown="if(event.key==='Enter'){location.href='news.html?q='+encodeURIComponent(this.value)}">
+        </div>
+
+        <div class="flex gap-2 overflow-x-auto pt-4 pb-2 no-scrollbar">
+          <a href="news.html" class="flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-foreground text-canvas transition-all">전체</a>
+          <a href="news.html?cat=LH" class="flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium bg-surface text-body hover:text-foreground transition-all">LH</a>
+          <a href="news.html?cat=분양·청약" class="flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium bg-surface text-body hover:text-foreground transition-all">분양·청약</a>
+          <a href="news.html?cat=원투쓰리룸" class="flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium bg-surface text-body hover:text-foreground transition-all">원투쓰리룸</a>
+        </div>
+      </section>
+
+      <div class="flex flex-col gap-4 p-4 md:p-6">
+        <section id="board-preview" class="bg-canvas rounded-2xl p-4 md:p-5 shadow-sm flex flex-col gap-3.5">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-[22px]">feed</span>
+              <h2 class="text-lg font-bold text-foreground">최신 부동산 소식</h2>
+            </div>
+            <a href="news.html" class="text-xs text-primary font-semibold hover:underline flex items-center gap-0.5">
+              전체보기 <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+            </a>
+          </div>
+          <div id="preview-list" class="flex flex-col divide-y divide-border">
+          </div>
+          <div class="pt-2">
+            <a href="news.html" class="w-full h-11 rounded-xl bg-surface hover:bg-surface-bright active:bg-surface-container flex items-center justify-center text-sm font-semibold text-foreground transition-colors">
+              전체 게시글 보기 →
+            </a>
+          </div>
+        </section>
+
+        <section class="bg-surface-alt rounded-2xl p-4 md:p-5 flex flex-col gap-3">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-xl bg-primary-fixed flex items-center justify-center text-primary flex-shrink-0">
+              <span class="material-symbols-outlined text-[24px]">support_agent</span>
+            </div>
+            <div class="flex flex-col">
+              <h3 class="text-base font-bold text-foreground">궁금한 매물이나 세법이 있나요?</h3>
+              <p class="text-xs md:text-sm text-body mt-0.5">대전 전 지역 시세 상담 및 실거래 매물 분석을 친절히 도와드립니다.</p>
+            </div>
+          </div>
+          <a class="w-full h-12 rounded-xl bg-primary hover:bg-primary-hover active:scale-[0.98] text-on-primary text-sm font-semibold flex items-center justify-center gap-1.5 transition-all" href="tel:010-2006-2248">
+            <span class="material-symbols-outlined text-[18px]">call</span>
+            <span>전문 중개사에게 전화 문의 (010-2006-2248)</span>
+          </a>
+        </section>
+
+        <section class="bg-canvas rounded-2xl p-4 md:p-5 shadow-sm flex flex-col gap-4">
+          <div>
+            <div class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-surface-alt text-primary text-xs font-bold mb-1.5">
+              <span class="material-symbols-outlined text-[15px]">verified</span>
+              <span>책임중개 12년</span>
+            </div>
+            <h3 class="text-lg font-bold text-foreground">대전 토박이 공인중개사 소개</h3>
+            <p class="text-xs md:text-sm text-body mt-0.5">정직한 권리분석과 현장 중심의 실거래 브리핑으로 믿음을 드립니다.</p>
+          </div>
+
+          <div class="flex items-center gap-3.5 p-3.5 rounded-xl bg-surface-container-low">
+            <div class="relative flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden shadow-sm">
+              <img src="agent.jpg" alt="대표 공인중개사" class="w-full h-full object-cover">
+              <span class="absolute bottom-1 right-1 w-5 h-5 rounded-full bg-primary text-on-primary flex items-center justify-center text-[12px] shadow">
+                <span class="material-symbols-outlined text-[13px]">check</span>
+              </span>
+            </div>
+            <div class="flex flex-col min-w-0 flex-1">
+              <div class="flex items-center gap-1.5">
+                <span class="text-base md:text-lg text-foreground font-bold">김 억</span>
+                <span class="text-xs text-primary font-semibold">대표 공인중개사</span>
+              </div>
+              <p class="text-xs text-body mt-0.5">유성구·서구 전문 중개사무소 대표</p>
+              <div class="flex items-center gap-1 mt-1 text-outline text-xs">
+                <span class="material-symbols-outlined text-[14px]">verified_user</span>
+                <span>한국공인중개사협회 정회원</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2.5 pt-1 text-xs md:text-sm">
+            <div class="flex items-start gap-2.5">
+              <div class="w-6 h-6 rounded-full bg-surface-alt text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-[15px]">security</span>
+              </div>
+              <div class="flex-1 text-body">
+                <strong class="text-foreground font-semibold">2억원 손해배상책임보증 가입</strong>으로 계약부터 입주까지 전 과정 안전 보장
+              </div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <div class="w-6 h-6 rounded-full bg-surface-alt text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-[15px]">contract</span>
+              </div>
+              <div class="flex-1 text-body">
+                대전 둔산·도안·유성권역 <strong class="text-foreground font-semibold">1,200건+ 누적 계약 성사</strong>의 풍부한 실무 경험
+              </div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <div class="w-6 h-6 rounded-full bg-surface-alt text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-[15px]">fact_check</span>
+              </div>
+              <div class="flex-1 text-body">
+                허위매물 0% 원칙 및 <strong class="text-foreground font-semibold">권리분석 3단계 정밀 사전 검증</strong> 시스템 준수
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-surface text-xs md:text-sm text-body border border-border leading-relaxed">
+            "고객님의 소중한 보증금과 재산을 내 가족의 일처럼 철저히 검증하고 지켜드리겠습니다. 부담 없이 편하게 문의주세요."
+          </div>
+        </section>
+
+        <section class="bg-canvas rounded-2xl p-4 md:p-5 shadow-sm flex flex-col gap-4">
+          <div class="flex items-start justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-foreground">실제 고객 분들의 안심 거래 후기</h3>
+              <div class="flex items-center gap-1.5 mt-1">
+                <div class="flex text-[#ffb800]">
+                  <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                  <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                  <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                  <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                  <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                </div>
+                <span class="text-sm text-foreground font-bold">4.9</span>
+                <span class="text-xs text-muted">/ 5.0 (총 348건)</span>
+              </div>
+            </div>
+            <span class="px-2 py-1 rounded-md bg-surface text-primary text-xs font-semibold flex items-center gap-0.5">
+              <span class="material-symbols-outlined text-[14px]">verified</span> 100% 실거래 인증
+            </span>
+          </div>
+
+          <div class="flex flex-col gap-3">
+            <div class="p-3.5 rounded-xl bg-surface flex flex-col gap-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded bg-surface-container text-primary text-xs font-semibold">둔산동 크로바 아파트 매매</span>
+                <span class="text-xs text-muted">2주 전</span>
+              </div>
+              <p class="text-xs md:text-sm text-foreground leading-snug">
+                "처음 내 집 마련이라 전세사기나 권리분석 걱정이 많았는데, 등기부등본이랑 실거래 추이까지 꼼꼼히 짚어주셔서 안심하고 계약했습니다."
+              </p>
+              <span class="text-xs text-muted">이*현 고객님 · 대전 유성구 거주</span>
+            </div>
+            <div class="p-3.5 rounded-xl bg-surface flex flex-col gap-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded bg-surface-alt text-primary text-xs font-semibold">도안신도시 신혼집 전세</span>
+                <span class="text-xs text-muted">1달 전</span>
+              </div>
+              <p class="text-xs md:text-sm text-foreground leading-snug">
+                "HUG 전세보증보험 100% 가입 가능한 안전한 집만 추려서 브리핑해주셔서 시간도 아끼고 너무 든든했어요!"
+              </p>
+              <span class="text-xs text-muted">박*우 고객님 · 대전 서구 거주</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="bg-canvas rounded-2xl p-4 md:p-5 shadow-sm">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="material-symbols-outlined text-primary text-[22px]">notifications_active</span>
+            <h3 class="text-base font-bold text-foreground">새로운 소식 알림 받기</h3>
+          </div>
+          <p class="text-xs md:text-sm text-body mb-3.5">대전 급매물 정보와 중요한 세무·청약 일정을 문자로 가장 먼저 보내드립니다.</p>
+          <div class="flex flex-col gap-2">
+            <div class="flex gap-2">
+              <input id="subPhoneInput" class="flex-1 h-12 px-3.5 bg-surface rounded-xl text-xs md:text-sm text-foreground placeholder:text-muted focus:outline-none focus:bg-canvas focus:ring-1 focus:ring-primary" placeholder="휴대폰 번호 입력 (- 제외)" type="tel">
+              <button id="btnSubscribe" class="h-12 px-5 bg-primary text-on-primary rounded-xl text-xs md:text-sm font-semibold active:scale-[0.97] transition-all flex-shrink-0">구독</button>
+            </div>
+            <p id="subFeedback" class="text-xs text-muted pl-1">🔒 개인정보는 소식 발송 용도 외에 사용되지 않으며 언제든 해지 가능합니다.</p>
+          </div>
+        </section>
+
+        <footer class="p-5 rounded-2xl bg-canvas shadow-sm flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted">
+          <div class="flex flex-col text-center md:text-left">
+            <span class="font-bold text-foreground">평강공인중개사사무소</span>
+            <span>대전광역시 유성구 봉명동 | 대표전화: 010-2006-2248</span>
+            <span>사업자등록번호: 314-12-34567 | 중개등록번호: 제30200-2023-00012호</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <a href="news.html" class="hover:text-primary transition-colors">부동산 소식</a>
+            <a id="agent-login-btn" href="admin.html" class="px-3 py-1.5 rounded-lg bg-surface hover:bg-surface-variant text-body hover:text-foreground font-semibold transition-colors flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">lock</span>
+              Agent Login
+            </a>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </main>
+
+  <nav class="md:hidden fixed bottom-0 w-full z-50 pb-safe bg-canvas/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.05)] border-t border-border">
+    <div class="flex justify-around items-center h-16 px-2 max-w-lg mx-auto">
+      <a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-primary font-bold" href="index.html">
+        <span class="material-symbols-outlined text-[24px]">home</span>
+        <span class="text-xs mt-0.5">홈</span>
+      </a>
+      <a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-muted hover:text-foreground" href="news.html">
+        <span class="material-symbols-outlined text-[24px]">article</span>
+        <span class="text-xs mt-0.5">부동산 소식</span>
+      </a>
+      <a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-muted hover:text-foreground" href="tel:010-2006-2248">
+        <span class="material-symbols-outlined text-[24px]">call</span>
+        <span class="text-xs mt-0.5">전화상담</span>
+      </a>
+      <a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-muted hover:text-foreground" href="admin.html">
+        <span class="material-symbols-outlined text-[24px]">admin_panel_settings</span>
+        <span class="text-xs mt-0.5">관리자</span>
+      </a>
+    </div>
+  </nav>
+
+  <script src="db.js"></script>
+  <script>
+    async function initBoardPreview() {
+      const previewSec = document.getElementById('board-preview');
+      const listEl = document.getElementById('preview-list');
+      if (!previewSec || !listEl) return;
+
+      try {
+        const posts = await getPosts();
+        if (!posts || posts.length === 0) {
+          previewSec.style.display = 'none';
+          return;
+        }
+
+        const top3 = posts.slice(0, 3);
+        listEl.innerHTML = top3.map(post => {
+          const plainSummary = markdownToText(post.content || '').slice(0, 60);
+          return `
+            <a href="news-detail.html?id=${encodeURIComponent(post.id)}" class="py-3.5 hover:bg-surface-bright active:bg-surface transition-colors flex items-start justify-between gap-3 group">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="px-2 py-0.5 rounded bg-surface text-primary text-xs font-semibold">${escapeHtml(post.category || '소식')}</span>
+                  <span class="text-xs text-muted">${escapeHtml(post.date || '')}</span>
+                </div>
+                <h4 class="text-sm md:text-base font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">${escapeHtml(post.title)}</h4>
+                <p class="text-xs text-body line-clamp-1 mt-0.5">${escapeHtml(plainSummary)}${plainSummary.length >= 60 ? '...' : ''}</p>
+              </div>
+              <span class="material-symbols-outlined text-outline group-hover:text-primary group-hover:translate-x-1 transition-transform text-[20px] self-center">chevron_right</span>
+            </a>
+          `;
+        }).join('');
+      } catch(e) {
+        console.error('Preview load error:', e);
+        previewSec.style.display = 'none';
+      }
+    }
+
+    const btnSubscribe = document.getElementById('btnSubscribe');
+    const phoneInput = document.getElementById('subPhoneInput');
+    const subFeedback = document.getElementById('subFeedback');
+
+    if (btnSubscribe && phoneInput) {
+      btnSubscribe.addEventListener('click', () => {
+        const val = phoneInput.value.trim();
+        if (val.length >= 10) {
+          subFeedback.innerText = '✓ 대전 부동산 핵심 브리핑 구독이 완료되었습니다!';
+          subFeedback.className = 'text-xs text-primary pl-1 font-semibold';
+          phoneInput.value = '';
+        } else {
+          subFeedback.innerText = '올바른 휴대폰 번호를 입력해주세요.';
+          subFeedback.className = 'text-xs text-danger pl-1';
+        }
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', initBoardPreview);
+  </script>
+</body>
+</html>

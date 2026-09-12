@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+  <title>부동산 소식 &amp; 리포트 - 평강부동산</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    @layer base {
+      html, body { width: 100%; margin: 0; padding: 0; min-height: 100vh; }
+      body { overscroll-behavior-y: none; background-color: #f2f4f6; }
+      .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+      .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#0059b9",
+            "primary-hover": "#2272eb",
+            "primary-fixed": "#d7e2ff",
+            "secondary": "#0056c6",
+            "foreground": "#191f28",
+            "body": "#4e5968",
+            "muted": "#8b95a1",
+            "surface": "#f2f4f6",
+            "surface-alt": "#e8f3ff",
+            "surface-bright": "#f7f9ff",
+            "surface-container": "#e5effc",
+            "surface-container-low": "#edf4ff",
+            "canvas": "#ffffff",
+            "border": "#e5e8eb",
+            "danger": "#e42939",
+            "error-container": "#ffdad6",
+            "tertiary-fixed": "#ffdbc8",
+            "on-tertiary-fixed": "#311300",
+            "on-primary": "#ffffff",
+            "outline": "#727785"
+          },
+          fontFamily: {
+            sans: ["Plus Jakarta Sans", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-sans text-body flex flex-col min-h-screen">
+  <header class="fixed top-0 w-full z-50 pt-safe bg-canvas/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+    <div class="h-16 px-4 md:px-8 max-w-5xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="min-w-[44px] min-h-[44px] flex items-center justify-center text-foreground hover:text-primary transition-colors">
+          <span class="material-symbols-outlined text-[24px]">arrow_back</span>
+        </a>
+        <h1 class="text-lg font-bold text-foreground">부동산 소식</h1>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="tel:010-2006-2248" aria-label="전화 문의" class="min-w-[44px] min-h-[44px] flex items-center justify-center text-on-surface-variant hover:text-foreground transition-colors">
+          <span class="material-symbols-outlined text-[24px]">call</span>
+        </a>
+        <a href="admin.html" aria-label="관리자" class="flex items-center justify-center pl-1">
+          <img alt="대표 공인중개사" class="w-8 h-8 rounded-full object-cover border border-border" src="agent.jpg">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 flex flex-col w-full pt-16 pb-28 bg-surface">
+    <div class="max-w-5xl mx-auto w-full px-4 md:px-6 pt-5">
+      <div class="bg-canvas rounded-2xl p-4 md:p-6 shadow-sm mb-4">
+        <div class="relative flex items-center">
+          <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px]">search</span>
+          <input id="search-input" class="w-full h-12 pl-10 pr-4 bg-surface rounded-xl text-sm text-foreground placeholder:text-muted focus:outline-none focus:bg-canvas focus:ring-1 focus:ring-primary transition-all" placeholder="제목이나 내용 검색 (예: 둔산동, 보증보험, 청약)" type="text">
+        </div>
+
+        <div class="flex gap-2 overflow-x-auto pt-3.5 no-scrollbar" id="category-chips">
+          <button class="cat-chip flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-foreground text-canvas transition-all" data-category="">전체</button>
+          <button class="cat-chip flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium bg-surface text-body hover:text-foreground transition-all" data-category="LH">LH</button>
+          <button class="cat-chip flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium bg-surface text-body hover:text-foreground transition-all" data-category="분양·청약">분양·청약</button>
+          <button class="cat-chip flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium bg-surface text-body hover:text-foreground transition-all" data-category="원투쓰리룸">원투쓰리룸</button>
+          <button class="cat-chip flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium bg-surface text-body hover:text-foreground transition-all" data-category="재건축·개발">재건축·개발</button>
+          <button class="cat-chip flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium bg-surface text-body hover:text-foreground transition-all" data-category="안심상식">안심상식</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div class="lg:col-span-2 flex flex-col gap-3.5">
+          <div class="flex items-center justify-between px-1">
+            <span class="text-xs text-muted font-medium" id="post-count-label">게시글 불러오는 중...</span>
+            <span class="text-xs text-muted">최신순 정렬</span>
+          </div>
+
+          <div id="news-list" class="flex flex-col gap-3">
+          </div>
+        </div>
+
+        <aside class="hidden lg:flex flex-col gap-4">
+          <div class="bg-canvas rounded-2xl p-5 shadow-sm flex flex-col gap-4">
+            <div class="flex items-center gap-3">
+              <div class="relative w-14 h-14 rounded-xl overflow-hidden shadow-sm flex-shrink-0">
+                <img src="agent.jpg" alt="대표 공인중개사" class="w-full h-full object-cover">
+              </div>
+              <div class="flex flex-col">
+                <div class="flex items-center gap-1.5">
+                  <span class="font-bold text-foreground text-base">김 억</span>
+                  <span class="text-xs text-primary font-semibold">대표 중개사</span>
+                </div>
+                <span class="text-xs text-muted mt-0.5">평강공인중개사사무소</span>
+              </div>
+            </div>
+            <p class="text-xs text-body leading-relaxed bg-surface p-3 rounded-xl">
+              "대전 전 지역 허위매물 없는 정직한 중개와 권리분석을 약속드립니다."
+            </p>
+            <a href="tel:010-2006-2248" class="w-full h-11 rounded-xl bg-primary hover:bg-primary-hover text-on-primary text-sm font-semibold flex items-center justify-center gap-1.5 transition-all">
+              <span class="material-symbols-outlined text-[18px]">call</span>
+              상담 전화 걸기
+            </a>
+          </div>
+
+          <div class="bg-surface-alt rounded-2xl p-5 flex flex-col gap-2.5">
+            <span class="text-xs font-bold text-primary">안심 권리분석 서비스</span>
+            <h4 class="text-sm font-bold text-foreground">계약 전 등기부등본 무료 분석</h4>
+            <p class="text-xs text-body">전세사기 방지 및 보증보험 가입 적격 여부를 사전에 꼼꼼히 점검해 드립니다.</p>
+          </div>
+        </aside>
+      </div>
+
+      <footer class="mt-8 p-5 rounded-2xl bg-canvas shadow-sm flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted">
+        <div class="flex flex-col text-center md:text-left">
+          <span class="font-bold text-foreground">평강공인중개사사무소</span>
+          <span>대전광역시 유성구 봉명동 | 대표전화: 010-2006-2248</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="index.html" class="hover:text-primary transition-colors">홈으로</a>
+          <a id="agent-login-btn" href="admin.html" class="px-3 py-1.5 rounded-lg bg-surface hover:bg-surface-variant text-body hover:text-foreground font-semibold transition-colors flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">lock</span>
+            Agent Login
+          </a>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <nav class="md:hidden fixed bottom-0 w-full z-50 pb-safe bg-canvas/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.05)] border-t border-border">
+    <div class="flex justify-around items-center h-16 px-2 max-w-lg mx-auto">
+      <a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-muted hover:text-foreground" href="index.html">
+        <span class="material-symbols-outlined text-[24px]">home</span>
+        <span class="text-xs mt-0.5">홈</span>
+      </a>
+      <a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-primary font-bold" href="news.html">
+        <span class="material-symbols-outlined text-[24px]">article</span>
+        <span class="text-xs mt-0.5">부동산 소식</span>
+      </a>
+      <a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-muted hover:text-foreground" href="tel:010-2006-2248">
+        <span class="material-symbols-outlined text-[24px]">call</span>
+        <span class="text-xs mt-0.5">전화상담</span>
+      </a>
+      <a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-muted hover:text-foreground" href="admin.html">
+        <span class="material-symbols-outlined text-[24px]">admin_panel_settings</span>
+        <span class="text-xs mt-0.5">관리자</span>
+      </a>
+    </div>
+  </nav>
+
+  <script src="db.js"></script>
+  <script>
+    let allPosts = [];
+    let currentCategory = '';
+    let currentQuery = '';
+
+    const urlParams = new URLSearchParams(window.location.search);
+    currentCategory = urlParams.get('cat') || '';
+    currentQuery = urlParams.get('q') || '';
+
+    const searchInput = document.getElementById('search-input');
+    const newsList = document.getElementById('news-list');
+    const countLabel = document.getElementById('post-count-label');
+    const chips = document.querySelectorAll('.cat-chip');
+
+    if (currentQuery && searchInput) searchInput.value = currentQuery;
+
+    chips.forEach(chip => {
+      const cat = chip.dataset.category;
+      if (cat === currentCategory) {
+        setChipActive(chip);
+      }
+      chip.addEventListener('click', () => {
+        currentCategory = cat;
+        chips.forEach(c => setChipInactive(c));
+        setChipActive(chip);
+        render();
+      });
+    });
+
+    function setChipActive(chip) {
+      chip.className = 'cat-chip flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-foreground text-canvas transition-all';
+    }
+
+    function setChipInactive(chip) {
+      chip.className = 'cat-chip flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium bg-surface text-body hover:text-foreground transition-all';
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        currentQuery = e.target.value.trim().toLowerCase();
+        render();
+      });
+    }
+
+    async function loadData() {
+      try {
+        allPosts = await getPosts();
+        render();
+      } catch(e) {
+        newsList.innerHTML = '<div class="p-8 text-center text-sm text-muted bg-canvas rounded-2xl">게시글을 불러오는 중 오류가 발생했습니다.</div>';
+      }
+    }
+
+    function render() {
+      const filtered = allPosts.filter(post => {
+        const matchCat = !currentCategory || post.category === currentCategory;
+        const text = ((post.title || '') + ' ' + (post.content || '')).toLowerCase();
+        const matchQ = !currentQuery || text.includes(currentQuery);
+        return matchCat && matchQ;
+      });
+
+      countLabel.textContent = `총 ${filtered.length}건의 소식`;
+
+      if (filtered.length === 0) {
+        newsList.innerHTML = `
+          <div class="p-12 text-center bg-canvas rounded-2xl shadow-sm">
+            <span class="material-symbols-outlined text-[48px] text-muted mb-2">search_off</span>
+            <p class="text-sm font-semibold text-foreground">조건에 맞는 소식이 없습니다.</p>
+            <p class="text-xs text-muted mt-1">다른 검색어를 입력하거나 카테고리를 변경해 보세요.</p>
+          </div>
+        `;
+        return;
+      }
+
+      newsList.innerHTML = filtered.map(post => {
+        const plainSummary = markdownToText(post.content || '').slice(0, 110);
+        return `
+          <article class="p-4 md:p-5 bg-canvas rounded-2xl shadow-sm hover:shadow-md transition-shadow cursor-pointer active:scale-[0.99]" onclick="location.href='news-detail.html?id=${encodeURIComponent(post.id)}'">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="px-2.5 py-0.5 rounded-md bg-surface text-primary font-semibold text-xs">${escapeHtml(post.category || '소식')}</span>
+              <span class="text-xs text-muted">${escapeHtml(post.date || '')}</span>
+            </div>
+            <h3 class="text-base md:text-lg font-bold text-foreground mb-1.5 leading-snug hover:text-primary transition-colors">${escapeHtml(post.title)}</h3>
+            <p class="text-xs md:text-sm text-body line-clamp-2 leading-relaxed">${escapeHtml(plainSummary)}${plainSummary.length >= 110 ? '...' : ''}</p>
+            <div class="mt-3.5 pt-3 border-t border-border flex items-center justify-between text-xs text-muted">
+              <span>평강공인중개사 리서치팀</span>
+              <span class="text-primary font-semibold flex items-center gap-0.5">
+                자세히 읽기 <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+              </span>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    window.addEventListener('DOMContentLoaded', loadData);
+  </script>
+</body>
+</html>

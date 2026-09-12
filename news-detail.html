@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+  <title>부동산 상세 소식 - 평강부동산</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    @layer base {
+      html, body { width: 100%; margin: 0; padding: 0; min-height: 100vh; }
+      body { overscroll-behavior-y: none; background-color: #f2f4f6; }
+      .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+      .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#0059b9",
+            "primary-hover": "#2272eb",
+            "primary-fixed": "#d7e2ff",
+            "secondary": "#0056c6",
+            "foreground": "#191f28",
+            "body": "#4e5968",
+            "muted": "#8b95a1",
+            "surface": "#f2f4f6",
+            "surface-alt": "#e8f3ff",
+            "surface-bright": "#f7f9ff",
+            "surface-container": "#e5effc",
+            "surface-container-low": "#edf4ff",
+            "canvas": "#ffffff",
+            "border": "#e5e8eb",
+            "danger": "#e42939",
+            "error-container": "#ffdad6",
+            "tertiary-fixed": "#ffdbc8",
+            "on-tertiary-fixed": "#311300",
+            "on-primary": "#ffffff",
+            "outline": "#727785"
+          },
+          fontFamily: {
+            sans: ["Plus Jakarta Sans", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-sans text-body flex flex-col min-h-screen">
+  <header class="fixed top-0 w-full z-50 pt-safe bg-canvas/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+    <div class="h-16 px-4 md:px-8 max-w-4xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="news.html" class="min-w-[44px] min-h-[44px] flex items-center justify-center text-foreground hover:text-primary transition-colors">
+          <span class="material-symbols-outlined text-[24px]">arrow_back</span>
+        </a>
+        <span class="text-sm md:text-base font-bold text-foreground">부동산 리포트</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="navigator.clipboard.writeText(location.href); alert('링크가 복사되었습니다.');" aria-label="공유" class="min-w-[44px] min-h-[44px] flex items-center justify-center text-body hover:text-foreground transition-colors">
+          <span class="material-symbols-outlined text-[22px]">share</span>
+        </button>
+        <a href="admin.html" aria-label="관리자" class="flex items-center justify-center pl-1">
+          <img alt="대표 공인중개사" class="w-8 h-8 rounded-full object-cover border border-border" src="agent.jpg">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 flex flex-col w-full pt-16 pb-28 bg-surface">
+    <div class="max-w-4xl mx-auto w-full px-4 md:px-6 pt-5">
+      <div id="post-loading" class="p-12 text-center bg-canvas rounded-2xl shadow-sm text-sm text-muted">
+        게시글을 불러오는 중입니다...
+      </div>
+
+      <article id="post-article" class="hidden bg-canvas rounded-2xl p-5 md:p-8 shadow-sm flex flex-col">
+        <div class="flex items-center justify-between gap-2 mb-3">
+          <div class="flex items-center gap-2">
+            <span id="post-category" class="px-2.5 py-0.5 rounded-md bg-surface-container text-primary font-bold text-xs"></span>
+            <span id="post-date" class="text-xs text-muted"></span>
+          </div>
+
+          <div id="admin-actions" class="hidden items-center gap-2">
+            <button id="btn-edit" class="px-3 py-1 text-xs font-semibold rounded-lg bg-surface hover:bg-surface-variant text-body transition-colors">
+              수정
+            </button>
+            <button id="btn-delete" class="px-3 py-1 text-xs font-semibold rounded-lg bg-error-container text-danger hover:opacity-80 transition-opacity">
+              삭제
+            </button>
+          </div>
+        </div>
+
+        <h1 id="post-title" class="text-xl md:text-2xl lg:text-3xl font-bold text-foreground leading-snug tracking-tight mb-4"></h1>
+
+        <div class="flex items-center justify-between pb-5 mb-6 border-b border-border text-xs text-muted">
+          <div class="flex items-center gap-2.5">
+            <img src="agent.jpg" alt="대표 공인중개사" class="w-7 h-7 rounded-full object-cover border border-border">
+            <span class="text-foreground font-semibold">김 억 대표 공인중개사</span>
+            <span>· 대전 리서치팀</span>
+          </div>
+          <span class="text-xs text-primary font-semibold">전문가 검증 완료</span>
+        </div>
+
+        <div id="post-content" class="text-body leading-relaxed text-sm md:text-base">
+        </div>
+
+        <div class="mt-10 p-5 rounded-2xl bg-surface-container-low flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-3.5">
+            <img src="agent.jpg" alt="대표 공인중개사" class="w-14 h-14 rounded-xl object-cover shadow-sm flex-shrink-0">
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="font-bold text-foreground text-sm md:text-base">김 억 공인중개사</span>
+                <span class="text-xs text-primary font-bold">책임중개 12년</span>
+              </div>
+              <p class="text-xs text-body mt-0.5">이 글과 관련된 맞춤 매물이나 세법 상담이 필요하신가요?</p>
+            </div>
+          </div>
+          <a href="tel:010-2006-2248" class="w-full md:w-auto px-5 h-11 rounded-xl bg-primary hover:bg-primary-hover text-on-primary text-sm font-semibold flex items-center justify-center gap-1.5 transition-all flex-shrink-0">
+            <span class="material-symbols-outlined text-[18px]">call</span>
+            전화 상담 문의
+          </a>
+        </div>
+
+        <div class="mt-6 pt-5 border-t border-border flex items-center justify-between">
+          <a href="news.html" class="px-4 py-2 rounded-xl bg-surface hover:bg-surface-bright text-xs font-semibold text-foreground flex items-center gap-1 transition-colors">
+            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+            목록으로 돌아가기
+          </a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <nav class="md:hidden fixed bottom-0 w-full z-50 pb-safe bg-canvas/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.05)] border-t border-border">
+    <div class="flex justify-around items-center h-16 px-2 max-w-lg mx-auto">
+      <a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-muted hover:text-foreground" href="index.html">
+        <span class="material-symbols-outlined text-[24px]">home</span>
+        <span class="text-xs mt-0.5">홈</span>
+      </a>
+      <a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-primary font-bold" href="news.html">
+        <span class="material-symbols-outlined text-[24px]">article</span>
+        <span class="text-xs mt-0.5">부동산 소식</span>
+      </a>
+      <a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-muted hover:text-foreground" href="tel:010-2006-2248">
+        <span class="material-symbols-outlined text-[24px]">call</span>
+        <span class="text-xs mt-0.5">전화상담</span>
+      </a>
+      <a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-muted hover:text-foreground" href="admin.html">
+        <span class="material-symbols-outlined text-[24px]">admin_panel_settings</span>
+        <span class="text-xs mt-0.5">관리자</span>
+      </a>
+    </div>
+  </nav>
+
+  <script src="db.js"></script>
+  <script>
+    async function initDetail() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+      const loadingEl = document.getElementById('post-loading');
+      const articleEl = document.getElementById('post-article');
+
+      if (!id) {
+        loadingEl.textContent = '게시글 ID가 유효하지 않습니다.';
+        return;
+      }
+
+      try {
+        const post = await getPost(id);
+        if (!post) {
+          loadingEl.textContent = '존재하지 않거나 삭제된 게시글입니다.';
+          return;
+        }
+
+        document.title = `${post.title} - 평강부동산`;
+        document.getElementById('post-category').textContent = post.category || '소식';
+        document.getElementById('post-date').textContent = post.date || '';
+        document.getElementById('post-title').textContent = post.title || '제목 없음';
+        
+        const contentEl = document.getElementById('post-content');
+        contentEl.innerHTML = renderMarkdown(post.content || '');
+
+        if (isAdmin()) {
+          const actionsEl = document.getElementById('admin-actions');
+          actionsEl.classList.remove('hidden');
+          actionsEl.classList.add('flex');
+
+          document.getElementById('btn-edit').addEventListener('click', () => {
+            window.location.href = `news-write.html?id=${encodeURIComponent(post.id)}`;
+          });
+
+          document.getElementById('btn-delete').addEventListener('click', async () => {
+            if (confirm('정말 이 게시글을 삭제하시겠습니까?')) {
+              try {
+                await deletePost(post.id);
+                alert('게시글이 삭제되었습니다.');
+                window.location.href = 'news.html';
+              } catch(e) {
+                alert('삭제 중 오류가 발생했습니다: ' + e.message);
+              }
+            }
+          });
+        }
+
+        loadingEl.classList.add('hidden');
+        articleEl.classList.remove('hidden');
+      } catch(e) {
+        loadingEl.textContent = '게시글을 불러오는 중 오류가 발생했습니다.';
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', initDetail);
+  </script>
+</body>
+</html>
